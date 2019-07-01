@@ -1,0 +1,33 @@
+\documentclass{article}
+\NeedsTeXFormat{LaTeX2e}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+
+
+\newcommand\Scale{4} % Scale
+\newcommand\Diam{50/\Scale} % Detector diameter in mm
+\newcommand\Height{20/\Scale} % Detector hight in mm
+\newcommand\WO{2/\Scale} % Groove depth
+\newcommand\Bullet{1/\Scale} %widow bulletization
+\newcommand\FCD{15/\Scale} %Flat Contact diam 
+\newcommand\GrooveExt{28/\Scale} %Groove ext. diameter
+\newcommand\GrooveInt{15/\Scale} %Groove int. diameter
+
+\begin{document}
+    
+\begin{tikzpicture}
+    \draw[red,thick,dashed] (0,-\Height) -- (0,-\Bullet); %Left wall
+    \draw[red,thick,dashed] (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
+    \draw[blue,thin,] (0,-\Bullet) -- (\Bullet,0) %bulletize left
+     -- (\Diam-\Bullet,0) -- (\Diam,0-\Bullet); %bulletize right
+    \draw[gray,thin] (\Diam,-\Height) -- (\Diam -\GrooveInt/2,-\Height) -- (\Diam -\GrooveInt/2,-\Height+\WO) -- 
+      (\Diam -\GrooveExt/2,-\Height+\WO) -- (\Diam -\GrooveExt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); -- %Groove right
+    \draw[gray,thin] (\Diam/2 - \FCD /2,-\Height) -- (\GrooveExt/2,-\Height) -- (\GrooveExt/2,-\Height+\WO) -- 
+      (\GrooveInt/2,-\Height+\WO) -- (\GrooveInt/2,-\Height) -- (0,-\Height); %Groove left
+    \draw[blue,thick](\Diam/2 - \FCD /2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); % Flat Contact
+    \draw[gray,thin,dashed,opacity=5] (\Diam/2,\Height/10) -- (\Diam/2,-\Height - \Height/10); %Symmetry line
+    \draw (\Diam/2, -\Height)node[anchor=north]{\footnotesize Flat contact};
+\end{tikzpicture}
+
+\end{document}
