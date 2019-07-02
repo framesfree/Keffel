@@ -1,33 +1,70 @@
-\documentclass{article}
+\documentclass{standalone}
+%\documentclass[convert={density=300,size=1080x800,outext=.png}]{standalone}
+%\documentclass[convert]{standalone}
 \NeedsTeXFormat{LaTeX2e}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
-\usepackage{fontspec}
+\usepackage{wasysym}
+% \usepackage{fontspec}
+\pdfpxdimen=1in
+\divide\pdfpxdimen by 900
 
 
-\newcommand\Scale{4} % Scale
-\newcommand\Diam{50/\Scale} % Detector diameter in mm
-\newcommand\Height{20/\Scale} % Detector hight in mm
-\newcommand\WO{2/\Scale} % Groove depth
-\newcommand\Bullet{1/\Scale} %widow bulletization
-\newcommand\FCD{15/\Scale} %Flat Contact diam 
-\newcommand\GrooveExt{28/\Scale} %Groove ext. diameter
-\newcommand\GrooveInt{15/\Scale} %Groove int. diameter
+\newcommand\Scale{3} % Scale
+\newcommand\Dia{50} % Detector diameter in mm
+\newcommand\Hei{20} % Detector hight in mm
+\newcommand\Gdt{2} % Groove depth
+\newcommand\Bult{1} %widow bulletization
+\newcommand\FltD{15} %Flat Contact diam 
+\newcommand\GrvEx{28} %Groove ext. diameter
+\newcommand\GrvIn{15} %Groove int. diameter
 
+
+
+\newcommand\Diam{\Dia/\Scale} % Detector diameter in mm
+\newcommand\Height{\Hei/\Scale} % Detector hight in mm
+\newcommand\WO{\Gdt/\Scale} % Groove depth
+\newcommand\Bullet{\Bult/\Scale} %widow bulletization
+\newcommand\FCD{\FltD/\Scale} %Flat Contact diam 
+\newcommand\GrooveExt{\GrvEx/\Scale} %Groove ext. diameter
+\newcommand\GrooveInt{\GrvIn/\Scale} %Groove int. diameter
+
+\tikzset{
+  arrow/.style={<->,>=latex,thin,gray,every rectangle node/.style={fill=white,midway,font=\sffamily}},
+  dimen/.style={thin,gray},
+}
 \begin{document}
+
     
 \begin{tikzpicture}
     \draw[red,thick,dashed] (0,-\Height) -- (0,-\Bullet); %Left wall
     \draw[red,thick,dashed] (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
-    \draw[blue,thin,] (0,-\Bullet) -- (\Bullet,0) %bulletize left
+    \draw[blue,thin] (0,-\Bullet) -- (\Bullet,0) %bulletize left
      -- (\Diam-\Bullet,0) -- (\Diam,0-\Bullet); %bulletize right
-    \draw[gray,thin] (\Diam,-\Height) -- (\Diam -\GrooveInt/2,-\Height) -- (\Diam -\GrooveInt/2,-\Height+\WO) -- 
-      (\Diam -\GrooveExt/2,-\Height+\WO) -- (\Diam -\GrooveExt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); -- %Groove right
-    \draw[gray,thin] (\Diam/2 - \FCD /2,-\Height) -- (\GrooveExt/2,-\Height) -- (\GrooveExt/2,-\Height+\WO) -- 
+    \draw[thin] (\Diam,-\Height) -- (\Diam -\GrooveInt/2,-\Height) -- (\Diam -\GrooveInt/2,-\Height+\WO) -- 
+      (\Diam -\GrooveExt/2,-\Height+\WO) -- (\Diam -\GrooveExt/2,-\Height) -- (\Diam/2 + \GrooveInt /2,-\Height); -- %Groove right
+    \draw[thin] (\Diam/2 - \GrooveInt /2,-\Height) -- (\GrooveExt/2,-\Height) -- (\GrooveExt/2,-\Height+\WO) -- 
       (\GrooveInt/2,-\Height+\WO) -- (\GrooveInt/2,-\Height) -- (0,-\Height); %Groove left
-    \draw[blue,thick](\Diam/2 - \FCD /2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); % Flat Contact
+    % \draw[blue,thick](\Diam/2 - \FCD /2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); % Flat Contact
+    \filldraw[fill=blue!40!white, draw=black] (\Diam/2 - \FCD /2,-\Height) rectangle (\Diam/2 + \FCD /2,-\Height + 0.2/\Scale);
     \draw[gray,thin,dashed,opacity=5] (\Diam/2,\Height/10) -- (\Diam/2,-\Height - \Height/10); %Symmetry line
-    \draw (\Diam/2, -\Height)node[anchor=north]{\footnotesize Flat contact};
-\end{tikzpicture}
+    %--------Captions--------
+    \draw (\Diam/2, -\Height)node[anchor=north]{\small Flat contact $\diameter$\pgfmathparse{int(\FltD)}\pgfmathresult};
+    \draw (\Diam/2, 0) node[anchor=south]{\small Thin window (\char`\~ 0.3 $\mu$m)};
+    \draw (-0.6/\Scale, -\Height*0.5) node[anchor=center,rotate=90]{\small Li diffusion (\char`\~ 700 $\mu$m)};
+    %--------Sizes--------
+    \draw[dimen] (0,-\Bullet) -- (0,\Height/3);
+    \draw[dimen] (\Diam,-\Bullet) -- (\Diam,\Height/3); %---diameter---
+    \draw[arrow,<->] (0,\Height/3.2) -- (\Diam,\Height/3.2) node{\pgfmathparse{int(\Dia)}\pgfmathresult};
+    %---
+    \draw[dimen] (\Bullet,0) -- (-\Diam/5,0);
+    \draw[dimen] (0,-\Height) -- (-\Diam/5,-\Height); %---height---
+    \draw[arrow,<->] (-\Diam/5.2,0) -- (-\Diam/5.2,-\Height) node{\pgfmathparse{int(\Hei)}\pgfmathresult};
+    %---
+    \draw[dimen] (\Diam/2-\GrooveInt/2,-\Height) -- (\Diam/2-\GrooveInt/2,-\Height-\Height/3);
+    \draw[dimen] (\Diam/2+\GrooveInt/2,-\Height) -- (\Diam/2+\GrooveInt/2,-\Height-\Height/3); %---Groove a---
+    \draw[arrow,<->] (0,\Height/3.2) -- (\Diam,\Height/3.2) node{\pgfmathparse{int(\Dia)}\pgfmathresult};
+    %---
+  \end{tikzpicture}
 
 \end{document}
