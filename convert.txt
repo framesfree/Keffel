@@ -1,0 +1,2 @@
+convert -density 600 -background white -alpha remove -alpha off gfd.pdf gfd.png
+pause
