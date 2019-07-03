@@ -1,5 +1,8 @@
 .vscode/
+*.aux
+*.fls
+*.log
 *.log
 *.fls
-gfd.synctex.gz
+*.synctex.gz
 *.fdb_latexmk
