@@ -1,4 +1,4 @@
-# Venden
+# Keffel
 
 ### LaTeX drawings of typical HPGe detector geometries.
 
