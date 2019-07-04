@@ -55,7 +55,7 @@
     %--------Sizes--------
     \draw[dimen] (0,-\Bullet) -- (0,\Height/3);
     \draw[dimen] (\Diam,-\Bullet) -- (\Diam,\Height/3); %---diameter---
-    \draw[arrow,<->] (0,\Height/3.2) -- (\Diam,\Height/3.2) node{\pgfmathparse{int(\Dia)}\pgfmathresult};
+    \draw[arrow,<->] (0,\Height/3.2) -- (\Diam,\Height/3.2) node{$\diameter$\pgfmathparse{int(\Dia)}\pgfmathresult};
     %---
     \draw[dimen] (\Bullet,0) -- (-\Diam/5.5,0);
     \draw[dimen] (0,-\Height) -- (-\Diam/5.5,-\Height); %---height---
@@ -63,11 +63,11 @@
     %---
     \draw[dimen] (\Diam/2-\GrooveInt/2,-\Height) -- (\Diam/2-\GrooveInt/2,-\Height-\Height/4);
     \draw[dimen] (\Diam/2+\GrooveInt/2,-\Height) -- (\Diam/2+\GrooveInt/2,-\Height-\Height/4); %---Groove inner D---
-    \draw[arrow,<->] (\Diam/2-\GrooveInt/2,-\Height -\Height/4.5) -- (\Diam/2+\GrooveInt/2,-\Height - \Height/4.5) node{\pgfmathparse{int(\GrvIn)}\pgfmathresult};
+    \draw[arrow,<->] (\Diam/2-\GrooveInt/2,-\Height -\Height/4.5) -- (\Diam/2+\GrooveInt/2,-\Height - \Height/4.5) node{$\diameter$\pgfmathparse{int(\GrvIn)}\pgfmathresult};
     %---
     \draw[dimen] (\Diam/2-\GrooveExt/2,-\Height) -- (\Diam/2-\GrooveExt/2,-\Height-\Height/2.5);
     \draw[dimen] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam/2+\GrooveExt/2,-\Height-\Height/2.5); %---Groove inner D---
-    \draw[arrow,<->] (\Diam/2-\GrooveExt/2,-\Height -\Height/2.8) -- (\Diam/2+\GrooveExt/2,-\Height - \Height/2.8) node{\pgfmathparse{int(\GrvEx)}\pgfmathresult};
+    \draw[arrow,<->] (\Diam/2-\GrooveExt/2,-\Height -\Height/2.8) -- (\Diam/2+\GrooveExt/2,-\Height - \Height/2.8) node{$\diameter$\pgfmathparse{int(\GrvEx)}\pgfmathresult};
     %---
     %\draw[dimen] (\Diam-\Bullet,0) -- (\Diam*1.2,0);
   \end{tikzpicture}
