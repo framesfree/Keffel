@@ -43,13 +43,13 @@
 
     
 \begin{tikzpicture}
-    \draw[lithium] (0,-\Height) -- (0,-\Bullet); %Left wall
-    \draw[lithium] (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
+    \draw[lithium] (\Diam/2-\GrooveExt/2,-\Height) -- (0,-\Height) -- (0,-\Bullet); %Left wall
+    \draw[lithium] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
     \draw[lithium] (0,-\Bullet) -- (\Bullet,0) %bulletize left
      -- (\Diam-\Bullet,0) -- (\Diam,0-\Bullet); %bulletize right
-    \draw[thin] (\Diam,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- 
+    \draw[thin] (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- 
       (\Diam/2 +\GrooveInt/2,-\Height+\WO) -- (\Diam/2 +\GrooveInt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);  %Groove right
-    \draw[thin] (0,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
+    \draw[thin] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
       (\Diam/2 -\GrooveInt/2,-\Height+\WO) -- (\Diam/2 -\GrooveInt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);  %Groove left
  
     \draw[thick, blue] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 - \FCD/2,-\Height + \Cdepth/\Scale) -- 

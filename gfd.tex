@@ -36,13 +36,13 @@
 
     
 \begin{tikzpicture}
-    \draw[red,ultra thick,dashed] (0,-\Height) -- (0,-\Bullet); %Left wall
-    \draw[red,ultra thick,dashed] (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
+    \draw[red,ultra thick,dashed] (\Diam/2-\GrooveExt/2,-\Height) -- (0,-\Height) -- (0,-\Bullet); %Left wall
+    \draw[red,ultra thick,dashed] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
     \draw[blue,thin] (0,-\Bullet) -- (\Bullet,0) %bulletize left
      -- (\Diam-\Bullet,0) -- (\Diam,0-\Bullet); %bulletize right
-    \draw[thin] (\Diam,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- 
+    \draw[thin] (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- 
       (\Diam/2 +\GrooveInt/2,-\Height+\WO) -- (\Diam/2 +\GrooveInt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);  %Groove right
-    \draw[thin] (0,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
+    \draw[thin] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
       (\Diam/2 -\GrooveInt/2,-\Height+\WO) -- (\Diam/2 -\GrooveInt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);  %Groove left
     % \draw[blue,thick](\Diam/2 - \FCD /2,-\Height) -- (\Diam/2 + \FCD /2,-\Height); % Flat Contact
     \filldraw[fill=blue!40!white, draw=black] (\Diam/2 - \FCD /2,-\Height) rectangle (\Diam/2 + \FCD /2,-\Height + 0.2/\Scale);
