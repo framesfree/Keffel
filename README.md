@@ -27,7 +27,9 @@ Simply type in your detector dimensions in the first block of code with variable
 \setboolean{thin_window}{false}       %thin window?[true|false]
 ```
 
-After editing just compile the PDF file. That's all! :)
+After editing just compile the PDF file. That's all! :) 
+The resulting document should look something like this:
+[Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
 
 ### How to convert PDF to PNG
 
@@ -35,7 +37,7 @@ After editing just compile the PDF file. That's all! :)
 
 2. In your terminal window symply type this command:
 
-    convert -density 120 -background white -alpha remove -alpha off gcd.pdf .\crystals\000_name_1900.png
+    `convert -density 120 -background white -alpha remove -alpha off gcd.pdf .\crystals\000_name_1900.png`
 
 ---
 
