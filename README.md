@@ -29,7 +29,8 @@ Simply type in your detector dimensions in the first block of code with variable
 
 After editing just compile the PDF file. That's all! :) 
 The resulting document should look something like this:
-[Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
+
+![Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
 
 ### How to convert PDF to PNG
 
