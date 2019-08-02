@@ -6,7 +6,7 @@ LaTeX drawings of typical HPGe detector geometries.
 
 ## Instructions
 
-### How to use the tex script
+### How to use the script
 
 Simply type in your detector dimensions in the first block of code with variables, it would be like this:
 
@@ -32,7 +32,7 @@ The resulting document should look something like this:
 
 ![Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
 
-### How to convert PDF to PNG
+### How to convert PDF to PNG?
 
 1. Install [ImageMagick](https://imagemagick.org/index.php)
 
