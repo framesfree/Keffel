@@ -29,15 +29,18 @@ Simply type in your detector dimensions in the first block of code with variable
 
 After editing just compile the PDF file. That's all! :) 
 The resulting document should look something like this:
-[Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
+
+![Example detector](https://github.com/framesfree/Keffel/blob/master/example.png)
 
 ### How to convert PDF to PNG
 
 1. Install [ImageMagick](https://imagemagick.org/index.php)
 
-2. In your terminal window symply type this command:
+2. In your terminal window simply type this command:
 
     `convert -density 120 -background white -alpha remove -alpha off gcd.pdf .\crystals\000_name_1900.png`
+
+    Where is `gcd.pdf` is input file name and `.\crystals\000_name_1900.png` is output file name.
 
 ---
 
