@@ -36,9 +36,11 @@ The resulting document should look something like this:
 
 1. Install [ImageMagick](https://imagemagick.org/index.php)
 
+2. Install [GhostScript](https://www.ghostscript.com/download/gsdnld.html)
+
 2. In your terminal window simply type this command:
 
-    `convert -density 120 -background white -alpha remove -alpha off gcd.pdf .\crystals\000_name_1900.png`
+    `convert -background white -alpha remove -alpha off gcd.pdf .\crystals\000_name_1900.png`
 
     Where is `gcd.pdf` is input file name and `.\crystals\000_name_1900.png` is output file name.
 
