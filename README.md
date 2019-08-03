@@ -44,7 +44,7 @@ The resulting document should look something like this:
 
     Where is `input.pdf` is input file name and `output.png` is output file name.
 
-    By default the picture size is 1200px in width, but you can change it if you want at line `\resizebox{1200px}{!}`. Exclamation mark symbol stands for relative height resizing.
+By default the picture size is 1200px in width, but you can change it if you want at line `\resizebox{1200px}{!}`. Exclamation mark symbol stands for relative height resizing.
 
 ---
 
