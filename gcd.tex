@@ -9,29 +9,32 @@
 \usepackage{pgf}
 % \usepackage{fontspec}
 
+% booleans:
 \newboolean{passivated}
 \newboolean{thin_window}
-%
+\newboolean{show_legendbox}
 
-\newcommand\Name{Coax/0001}          % Name
-\newcommand\Crystal{INTRI~6666}       % Crystal number
-\newcommand\HEAD{1.50}                % HEAD conc x 10^10
-\newcommand\TAIL{1.60}                % TAIL conc x 10^10
-\newcommand\Dia{59.0}                 % Detector diameter in mm
-\newcommand\Hei{53.8}                 % Detector hight in mm
-\newcommand\Gdt{5.0}                  % Groove depth
-\newcommand\Bult{3.0}                 %widow bulletization
-\newcommand\Cdiam{7.0}                %Contact diam 
-\newcommand\Cdepth{37.7}              %Contact depth
-\newcommand\GrvEx{28.0}               %Groove ext. diameter
-\newcommand\GrvIn{18.0}               %Groove int. diameter
-\setboolean{passivated}{true}         %passivation?[true|false]
-\setboolean{thin_window}{true}       %thin window?[true|false]
+% =======================================
+% INPUT YOUR VALUES HERE--->|           | (all sizes in mm)
+\newcommand\Name            {Coax/0001}  % Name
+\newcommand\Crystal         {INTRI~6666} % Crystal number
+\newcommand\HEAD            {1.50}       % HEAD conc x 10^10
+\newcommand\TAIL            {1.60}       % TAIL conc x 10^10
+\newcommand\Dia             {59.0}       % Detector diameter in mm
+\newcommand\Hei             {53.8}       % Detector hight in mm
+\newcommand\Gdt             {5.0}        % Groove depth
+\newcommand\Bult            {3.0}        % widow bulletization
+\newcommand\Cdiam           {7.0}        % Contact diam 
+\newcommand\Cdepth          {37.7}       % Contact depth
+\newcommand\GrvEx           {28.0}       % Groove ext. diameter
+\newcommand\GrvIn           {18.0}       % Groove int. diameter
+\setboolean{passivated}     {false}       % Passivation? [true|false]
+\setboolean{thin_window}    {true}       % Thin window? [true|false]
+\setboolean{show_legendbox} {true}       % Show legend box? [true|false]
+% =======================================
 
 
-\newcommand\Scale{4} % Scale
-%\newcommand\Scale{\pgfmathparse{int(300/\Dia)\pgfmathresult}}
-%\newcommand\Scale{\pgfmathparse{int(300/\Dia)} % Scale
+\newcommand\Scale{4} % <--- Scale (do NOT change if you are not shure what is it!)
 \newcommand\Diam{\Dia/\Scale} % Detector diameter in mm
 \newcommand\Height{\Hei/\Scale} % Detector hight in mm
 \newcommand\WO{\Gdt/\Scale} % Groove depth
@@ -41,14 +44,14 @@
 \newcommand\GrooveExt{\GrvEx/\Scale} %Groove ext. diameter
 \newcommand\GrooveInt{\GrvIn/\Scale} %Groove int. diameter
 
-\tikzset{
+\tikzset{ % styles for layers
   arrow/.style={<->,>=latex,thin,gray,every rectangle node/.style={fill=white,midway,font=\sffamily}},
   dimen/.style={thin,gray},
   caption/.style={font=\sffamily,black,scale=1.3},
-  lithium/.style={red!90!white,line width=2pt},
-  germanium/.style={black,line width=1pt},
-  passiv/.style={violet!50!white,line width=3pt},
-  in_window/.style={blue,line width=1pt},
+  lithium/.style={rounded corners,red!90!white,line width=2pt},
+  germanium/.style={rounded corners,black!80,line width=1pt},
+  passiv/.style={rounded corners,violet!50!white,line width=3pt},
+  in_window/.style={rounded corners,blue,line width=1pt},
 }
 \begin{document}
 
@@ -56,24 +59,19 @@
 \resizebox{1200px}{!}{ %<---YOU CAN SET IMAGE SIZE IN PIXELS HERE!
 \begin{tikzpicture}[thick,scale=0.8, every node/.style={scale=0.8}]
 % Back fill
-    \draw[top color=gray!5!white, bottom color=black!60!blue!15] (0,-\Height) -- (0,-\Bullet) --
-    (\Bullet,0) -- (\Diam-\Bullet,0) -- (\Diam,-\Bullet) -- (\Diam,-\Height);
+    \draw[rounded corners, top color=gray!5!white, bottom color=black!60!blue!15,draw=none] (0,-\Height) -- (0,-\Bullet) --
+    (\Bullet,0) -- (\Diam-\Bullet,0) -- (\Diam,-\Bullet) -- (\Diam,-\Height) -- cycle;
     \draw[gray!45, line width=0.5pt] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);
     \draw[gray!45, line width=0.5pt] (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);
     \draw[gray!45, line width=0.5pt] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);
 % ---
-    \draw[lithium] (\Diam/2-\GrooveExt/2,-\Height) -- (0,-\Height) -- (0,-\Bullet); %Left wall
-    \draw[lithium] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
+    \draw[lithium] (\Diam/2-\GrooveExt/2,-\Height) -- (0,-\Height) -- (0,-\Bullet) -- %Left wall
+    (\Bullet,0); %bulletize left
+    \draw[lithium] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam,-\Height) -- (\Diam,-\Bullet)-- %Right wall
+    (\Diam-\Bullet,0); %bulletize right
     \ifthenelse{\boolean{thin_window}}
-    {
-      \draw[in_window] (\Bullet,0) -- (\Diam-\Bullet,0); %thin input window
-      \draw (\Diam/2,0) node[caption,anchor=south]{\small Thin window (\char`\~ 0.3 $\mu$m)};
-    }
-    {
-      \draw[lithium] (\Bullet,0) -- (\Diam-\Bullet,0); %input window with Li layer
-    }
-    \draw[lithium] (0,-\Bullet) -- (\Bullet,0); %bulletize left
-    \draw[lithium] (\Diam-\Bullet,0) -- (\Diam,0-\Bullet); %bulletize right
+      {  \draw[in_window] (\Bullet,0) -- (\Diam-\Bullet,0);} % thin window
+      {  \draw[lithium] (\Bullet,0) -- (\Diam-\Bullet,0);} % window with Li layer 
 
     \ifthenelse{\boolean{passivated}}
       {
@@ -82,7 +80,6 @@
         \draw[passiv] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
         (\Diam/2 -\GrooveInt/2,-\Height+\WO) -- (\Diam/2 -\GrooveInt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);  %Groove left
         \draw[arrow, ->] (\Diam/2*1.8,-\Height*1.2) -- (\Diam/2+\GrooveInt/2,-\Height+\WO/2);
-        \draw (\Diam/2*1.8,-\Height*1.2) node [caption,anchor=west]{Passivation coating};
       }
       {
         \draw[germanium] (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- 
@@ -93,11 +90,13 @@
 
     \draw[in_window] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 - \FCD/2,-\Height + \Cdepth/\Scale) -- 
     (\Diam/2 + \FCD /2,-\Height + \Cdepth/\Scale) -- (\Diam/2 + \FCD /2,-\Height); %Contact hole
-    \draw[gray,thin,dashed,opacity=5] (\Diam/2,\Height/10) -- (\Diam/2,-\Height - \Height/10); %Symmetry line
+    \draw[gray,thin,dashed,opacity=5] (\Diam/2,\Height/15) -- (\Diam/2,-\Height - \Height/15); %Symmetry line
     %--------Captions--------
     \draw (\Diam/2 - \FCD/2 -0.6/\Scale, -\Height + \Cdepth/\Scale/2)node[caption,anchor=center,rotate=90]{\footnotesize Central contact (\char`\~ 0.3 $\mu$m)};
-    \draw (-0.6/\Scale, -\Height*0.5) node[caption,anchor=center,rotate=90]{\small Li diffusion (\char`\~ 700 $\mu$m)};
+    \draw (0, -\Height*0.5) node[caption,anchor=south,rotate=90]{\small Li diffusion (\char`\~ 700 $\mu$m)};
     \draw (\Diam/5, -\Height/1.2) node[caption,anchor=south]{P-type Germanium};
+    \ifthenelse{\boolean{passivated}}{ \draw (\Diam/2*1.8,-\Height*1.2) node [caption,anchor=west]{Passivation coating};}{}
+    \ifthenelse{\boolean{thin_window}}{\draw (\Diam/2,0) node[caption,anchor=south]{\small Thin window (\char`\~ 0.3 $\mu$m)};}{}
     %--------Dimensions--------
     \draw[dimen] (0,-\Bullet) -- (0,\Height/5);
     \draw[dimen] (\Diam,-\Bullet) -- (\Diam,\Height/5); %---diameter---
@@ -128,7 +127,8 @@
     \draw[dimen] (\Diam/2+\FCD/2, -\Height+\CDepth) -- (\Diam+\Diam/5,-\Height+\CDepth);
     \draw[dimen] (\Diam,-\Height) -- (\Diam+\Diam/5,-\Height);
     \draw[arrow,<->] (\Diam+\Diam/5.5,-\Height+\CDepth) -- (\Diam+\Diam/5.5,-\Height) node[caption]{\pgfmathparse{\Cdepth}\pgfmathresult};
-  
+    \ifthenelse{\boolean{show_legendbox}}
+    {
     %--- INFO BOX
     \newcommand\LX{\Diam/2.5}           % Legend box horizontal size
     \newcommand\LY{\LX/2}               % Legend box vertical size
@@ -141,7 +141,7 @@
     \draw (\Xa+\LX/2, \Ya-\LY/1.8) node[anchor=north]{\large $\mathcal{C}_{HEAD}=~\HEAD\times10^{10}~cm^{-3}$};
     \draw (\Xa+\LX/2, \Ya-\LY) node[anchor=south]{\large $\mathcal{C}_{TAIL}=~\TAIL\times10^{10}~cm^{-3}$};
     %---
-
+    }{}
 
   %3D miniature
 
