@@ -11,7 +11,7 @@
 Simply type in your detector dimensions in the first block of code with variables, it would be like this:
 
 ```latex
-\newcommand\Name{Test/0001}          % Name
+\newcommand\Name{Test/0001}           % Name
 \newcommand\Crystal{INTRI~5422}       % Crystal number
 \newcommand\HEAD{1.59}                % HEAD conc x 10^10
 \newcommand\TAIL{1.60}                % TAIL conc x 10^10
