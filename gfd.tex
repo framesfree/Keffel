@@ -8,6 +8,11 @@
 % \usepackage{fontspec}
 
 
+\newcommand\Name            {Test/0001}  % Name
+\newcommand\Crystal         {INTRI~5422} % Crystal number
+\newcommand\HEAD            {1.59}       % HEAD conc x 10^10
+\newcommand\TAIL            {1.60}       % TAIL conc x 10^10
+
 \newcommand\Scale{4} % Scale
 \newcommand\Dia{50} % Detector diameter in mm
 \newcommand\Hei{20} % Detector hight in mm
@@ -36,6 +41,13 @@
 
     
 \begin{tikzpicture}
+  % Back fill
+  \draw[rounded corners, top color=gray!5!white, bottom color=black!60!blue!15,draw=none] (0,-\Height) -- (0,-\Bullet) --
+  (\Bullet,0) -- (\Diam-\Bullet,0) -- (\Diam,-\Bullet) -- (\Diam,-\Height) -- cycle;
+  \draw[gray!45, line width=0.5pt] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);
+  \draw[gray!45, line width=0.5pt] (\Diam/2 +\GrooveExt/2,-\Height) -- (\Diam/2 + \FCD /2,-\Height);
+  \draw[gray!45, line width=0.5pt] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);
+% ---
     \draw[red,ultra thick,dashed] (\Diam/2-\GrooveExt/2,-\Height) -- (0,-\Height) -- (0,-\Bullet); %Left wall
     \draw[red,ultra thick,dashed] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam,-\Height) -- (\Diam,-\Bullet); %Right wall
     \draw[blue,thin] (0,-\Bullet) -- (\Bullet,0) %bulletize left
@@ -70,6 +82,20 @@
     \draw[arrow,<->] (\Diam/2-\GrooveExt/2,-\Height -\Height/2.8) -- (\Diam/2+\GrooveExt/2,-\Height - \Height/2.8) node{$\diameter$\pgfmathparse{int(\GrvEx)}\pgfmathresult};
     %---
     %\draw[dimen] (\Diam-\Bullet,0) -- (\Diam*1.2,0);
+
+    %--- INFO BOX
+    \newcommand\LX{\Diam/2.5}           % Legend box horizontal size
+    \newcommand\LY{\LX/2}               % Legend box vertical size
+    \newcommand\Xa{\Diam*1.4}           % Legend box horizontal position
+    \newcommand\Ya{0/\Scale}            % Legend box vertical position
+
+    \filldraw[left color=green!10, right color=green!10, draw=black] (\Xa, \Ya) rectangle (\Xa+\LX, \Ya-\LY);
+    \draw (\Xa+\LX/2, \Ya) node[anchor=north]{\Large $\Name$};
+    \draw (\Xa+\LX/2, \Ya-\LY/4) node[anchor=north]{\Large $\Crystal$};
+    \draw (\Xa+\LX/2, \Ya-\LY/1.8) node[anchor=north]{\large $\mathcal{C}_{HEAD}=~\HEAD\times10^{10}~cm^{-3}$};
+    \draw (\Xa+\LX/2, \Ya-\LY) node[anchor=south]{\large $\mathcal{C}_{TAIL}=~\TAIL\times10^{10}~cm^{-3}$};
+    %---
+
   \end{tikzpicture}
 
 \end{document}

@@ -14,27 +14,10 @@
 \newboolean{thin_window}
 \newboolean{show_legendbox}
 
-% =======================================
-% INPUT YOUR VALUES HERE--->|           | (all sizes in mm)
-\newcommand\Name            {Coax/0001}  % Name
-\newcommand\Crystal         {INTRI~6666} % Crystal number
-\newcommand\HEAD            {1.50}       % HEAD conc x 10^10
-\newcommand\TAIL            {1.60}       % TAIL conc x 10^10
-\newcommand\Dia             {59.0}       % Detector diameter in mm
-\newcommand\Hei             {53.8}       % Detector hight in mm
-\newcommand\Gdt             {5.0}        % Groove depth
-\newcommand\Bult            {3.0}        % widow bulletization
-\newcommand\Cdiam           {7.0}        % Contact diam 
-\newcommand\Cdepth          {37.7}       % Contact depth
-\newcommand\GrvEx           {28.0}       % Groove ext. diameter
-\newcommand\GrvIn           {18.0}       % Groove int. diameter
-\setboolean{passivated}     {true}       % Passivation? [true|false]
-\setboolean{thin_window}    {true}       % Thin window? [true|false]
-\setboolean{show_legendbox} {true}       % Show legend box? [true|false]
-% =======================================
-
-
-\newcommand\Scale{4} % <--- Scale (do NOT change if you are not shure what is it!)
+%\input{crystals/003_korea_1902.txt}
+% \input{input_GCD.tex} % test input
+ \input{input_GFD.tex} % test input
+\newcommand\Scale{3} % <--- Scale (do NOT change if you are not shure what is it!)
 \newcommand\Diam{\Dia/\Scale} % Detector diameter in mm
 \newcommand\Height{\Hei/\Scale} % Detector hight in mm
 \newcommand\WO{\Gdt/\Scale} % Groove depth
@@ -87,12 +70,18 @@
         \draw[germanium] (\Diam/2 -\GrooveExt/2,-\Height) -- (\Diam/2 -\GrooveExt/2,-\Height+\WO) -- 
         (\Diam/2 -\GrooveInt/2,-\Height+\WO) -- (\Diam/2 -\GrooveInt/2,-\Height) -- (\Diam/2 - \FCD /2,-\Height);  %Groove left
       }
-
-    \draw[in_window] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 - \FCD/2,-\Height + \Cdepth/\Scale) -- 
-    (\Diam/2 + \FCD /2,-\Height + \Cdepth/\Scale) -- (\Diam/2 + \FCD /2,-\Height); %Contact hole
+      \ifthenelse{\equal{\Dtype}{coax}}{
+      \draw[in_window] (\Diam/2 - \FCD/2,-\Height) -- (\Diam/2 - \FCD/2,-\Height + \Cdepth/\Scale) -- 
+      (\Diam/2 + \FCD /2,-\Height + \Cdepth/\Scale) -- (\Diam/2 + \FCD /2,-\Height);}{} %Contact hole
+      
+      \ifthenelse{\equal{\Dtype}{flat}}{
+      \filldraw[fill=blue!40!white, draw=none] (\Diam/2 - \FCD /2,-\Height) rectangle (\Diam/2 + \FCD /2,-\Height + 0.2/\Scale);}{} % Flat contact
     \draw[gray,thin,dashed,opacity=5] (\Diam/2,\Height/15) -- (\Diam/2,-\Height - \Height/15); %Symmetry line
     %--------Captions--------
-    \draw (\Diam/2 - \FCD/2 -0.6/\Scale, -\Height + \Cdepth/\Scale/2)node[caption,anchor=center,rotate=90]{\footnotesize Central contact (\char`\~ 0.3 $\mu$m)};
+    \ifthenelse{\equal{\Dtype}{coax}}{
+      \draw (\Diam/2 - \FCD/2 -0.6/\Scale, -\Height + \Cdepth/\Scale/2)node[caption,anchor=center,rotate=90]{\footnotesize Central contact (\char`\~ 0.3 $\mu$m)};}{}
+      \ifthenelse{\equal{\Dtype}{flat}}{
+      \draw (\Diam/2, -\Height)node[caption,anchor=north]{\small Flat contact $\diameter$\pgfmathparse{int(\Cdiam)}\pgfmathresult};}{}
     \draw (0, -\Height*0.5) node[caption,anchor=south,rotate=90]{\small Li diffusion (\char`\~ 700 $\mu$m)};
     \draw (\Diam/5, -\Height/1.2) node[caption,anchor=south]{P-type Germanium};
     \ifthenelse{\boolean{passivated}}{ \draw (\Diam/2*1.8,-\Height*1.2) node [caption,anchor=west]{Passivation coating};}{}
@@ -102,7 +91,8 @@
     \draw[dimen] (\Diam,-\Bullet) -- (\Diam,\Height/5); %---diameter---
     \draw[arrow,<->] (0,\Height/5.5) -- (\Diam,\Height/5.5) node[caption]{$\diameter$\pgfmathparse{\Dia}\pgfmathresult};
     %---
-    \draw[arrow,<->] (\Diam/2 - \FCD/2, -\Height + 3/\Scale) -- (\Diam/2 + \FCD/2, -\Height + 3/\Scale) node[caption,anchor=north]{\small $\diameter$\pgfmathparse{\Cdiam}\pgfmathresult};
+    \ifthenelse{\equal{\Dtype}{coax}}{
+    \draw[arrow,<->] (\Diam/2 - \FCD/2, -\Height + 3/\Scale) -- (\Diam/2 + \FCD/2, -\Height + 3/\Scale) node[caption,anchor=north]{\small $\diameter$\pgfmathparse{\Cdiam}\pgfmathresult};}{}
     %---
     \draw[dimen] (\Bullet,0) -- (-\Diam/5.5,0);
     \draw[dimen] (0,-\Height) -- (-\Diam/5.5,-\Height); %---height---
@@ -116,23 +106,28 @@
     \draw[dimen] (\Diam/2+\GrooveExt/2,-\Height) -- (\Diam/2+\GrooveExt/2,-\Height-\Height/3.5); %---Groove outer D---
     \draw[arrow,<->] (\Diam/2-\GrooveExt/2,-\Height -\Height/3.8) -- (\Diam/2+\GrooveExt/2,-\Height - \Height/3.8) node[caption]{$\diameter$\pgfmathparse{\GrvEx}\pgfmathresult};
     %---
+    \ifthenelse{\equal{\Dtype}{coax}}{
     \draw[dimen] (\Diam-\Bullet,0) -- (\Diam+\Diam/5,0);
     \draw[dimen] (\Diam,-\Bullet) -- (\Diam+\Diam/5,-\Bullet);
     \draw[arrow,->] (\Diam+\Diam/5.5,-1.5*\Bullet) -- (\Diam+\Diam/5.5,0); 
-    \draw[dimen] (\Diam+\Diam/5.5,-1.3*\Bullet) node[anchor=west,caption]{$\pgfmathparse{\Bult}\pgfmathresult\times45\degree$}; %Bulletize
+    \draw[dimen] (\Diam+\Diam/5.5,-1.3*\Bullet) node[anchor=west,caption]{$\pgfmathparse{\Bult}\pgfmathresult\times45\degree$};}{} %Bulletize
     %---
     \draw[dimen] (\Diam/2 +\GrooveExt/2,-\Height+\WO) -- (\Diam/2+\GrooveInt*1.1,-\Height+\WO);
     \draw[arrow,<->] (\Diam/2+\GrooveInt,-\Height+\WO) -- (\Diam/2+\GrooveInt,-\Height) node[caption]{\pgfmathparse{\Gdt}\pgfmathresult};
     %---
+    \ifthenelse{\equal{\Dtype}{coax}}{
     \draw[dimen] (\Diam/2+\FCD/2, -\Height+\CDepth) -- (\Diam+\Diam/5,-\Height+\CDepth);
     \draw[dimen] (\Diam,-\Height) -- (\Diam+\Diam/5,-\Height);
-    \draw[arrow,<->] (\Diam+\Diam/5.5,-\Height+\CDepth) -- (\Diam+\Diam/5.5,-\Height) node[caption]{\pgfmathparse{\Cdepth}\pgfmathresult};
+    \draw[arrow,<->] (\Diam+\Diam/5.5,-\Height+\CDepth) -- (\Diam+\Diam/5.5,-\Height) node[caption]{\pgfmathparse{\Cdepth}\pgfmathresult};}{}
     \ifthenelse{\boolean{show_legendbox}}
     {
     %--- INFO BOX
     \newcommand\LX{\Diam/2.5}           % Legend box horizontal size
     \newcommand\LY{\LX/2}               % Legend box vertical size
-    \newcommand\Xa{\Diam*1.4}           % Legend box horizontal position
+    \ifthenelse{\equal{\Dtype}{coax}}{
+    \newcommand\Xa{\Diam*1.4}}{}           % Legend box horizontal position if coax
+    \ifthenelse{\equal{\Dtype}{flat}}{
+      \newcommand\Xa{\Diam*1.15}}{}           % Legend box horizontal position if flat
     \newcommand\Ya{0/\Scale}            % Legend box vertical position
 
     \filldraw[left color=green!10, right color=green!10, draw=black] (\Xa, \Ya) rectangle (\Xa+\LX, \Ya-\LY);
@@ -144,7 +139,7 @@
     }{}
 
   %3D miniature
-
+  % \ifthenelse{\equal{\Dtype}{coax}}{\draw (0,0) node{COAX};}{}
 
   \end{tikzpicture}
 }
