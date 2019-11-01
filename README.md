@@ -57,4 +57,3 @@ By default the picture size is 1200px in width, but you can change it if you wan
 
 - gpd.tex - Germanium Planar Detector
 - gwd.tex - Germanium Well-type Detector
-- Add an option to hide the legend box.
